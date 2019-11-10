@@ -26,6 +26,14 @@ sourceSets {
     }
 }
 
+task copyJar(type: Copy) {
+    from file("$buildDir/libs/IoC-container-1.0-SNAPSHOT.jar")
+    into 'src/test/resources'
+    rename { String fileName ->
+        'test.jar'
+    }
+}
+
 jar {
     manifest {
         attributes(
@@ -36,10 +44,13 @@ jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    finalizedBy(copyJar)
 }
 
 clean {
     doFirst {
         delete 'out'
+        delete 'src/test/resources/test.jar'
     }
 }
