@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'groovy'
+    id 'jacoco'
 }
 
 group 'IoC-container'
@@ -23,6 +24,17 @@ sourceSets {
         java {
             srcDirs = ['src/test/groovy']
         }
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
     }
 }
 
@@ -52,5 +64,11 @@ clean {
     doFirst {
         delete 'out'
         delete 'src/test/resources/test.jar'
+    }
+}
+
+build {
+    dependsOn {
+        jacocoTestReport
     }
 }

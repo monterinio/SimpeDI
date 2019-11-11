@@ -3,5 +3,8 @@ notifications:
   email:
     recipients:
       - mariusz.mikolajczak@onet.com.pl
-    on_success:  always
     on_failure:  always
+script:
+  - gradle clean build
+after_success:
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
