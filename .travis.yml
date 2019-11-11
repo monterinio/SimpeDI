@@ -1,0 +1,7 @@
+language: java
+notifications:
+  email:
+    recipients:
+      - mariusz.mikolajczak@onet.com.pl
+    on_success:  always
+    on_failure:  always
