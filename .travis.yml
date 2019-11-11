@@ -1,10 +1,17 @@
 language: java
+
 notifications:
   email:
     recipients:
       - mariusz.mikolajczak@onet.com.pl
     on_failure:  always
+
+addons:
+  sonarcloud:
+    organization: "monterinio"
+
 script:
-  - gradle clean build
+  - ./gradlew clean build sonarqube
+
 after_success:
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
