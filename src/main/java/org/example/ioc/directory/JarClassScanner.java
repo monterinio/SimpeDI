@@ -10,6 +10,8 @@ import java.util.stream.StreamSupport;
 
 class JarClassScanner implements ClassScanner {
 
+    private static final String CLASS_SUFFIX = ".class";
+
     @Override
     public Set<Class<?>> locate(String dir) {
 
@@ -30,7 +32,7 @@ class JarClassScanner implements ClassScanner {
     }
 
     private String toFullPackageName(String str) {
-        return str.replace(".class", "")
+        return str.replace(CLASS_SUFFIX, "")
                 .replaceAll("\"", ".")
                 .replace("/", ".");
     }

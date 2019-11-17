@@ -11,7 +11,7 @@ class DirClassScannerTest extends Specification {
     def "should locate classes directly"() {
         given:
         def root = System.getProperty("user.dir")
-        def folders = "out/production/classes"
+        def folders = "build/classes/java/main/"
         def filePath = Path.of(root, folders)
 
         when:

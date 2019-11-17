@@ -7,13 +7,15 @@ import java.util.Set;
 class DirClassScanner implements ClassScanner {
 
     private Set<Class<?>> classes = new HashSet<>();
-
+    private static final String CLASS_SUFFIX = ".class";
+    private static final String INTELLIJ_OUTPUT_FOLDER = "classes.";
+    private static final String GRADLE_OUTPUT_FOLDER = "main.";
     @Override
     public Set<Class<?>> locate(String dir) {
         var file = new File(dir);
 
         if (!file.isDirectory()) {
-            throw new IllegalStateException("Panic!");
+            throw new IllegalStateException("File " + dir + " is not a directory!");
         }
         scanDir(file, "");
         return classes;
@@ -24,7 +26,7 @@ class DirClassScanner implements ClassScanner {
         final String currentPackage;
 
         if (file.isDirectory()) {
-             currentPackage = packageName + file.getName() + ".";
+            currentPackage = packageName + file.getName() + ".";
             for (File thisFile : file.listFiles()) {
                 scanDir(thisFile, currentPackage);
             }
@@ -36,6 +38,9 @@ class DirClassScanner implements ClassScanner {
     }
 
     private String toFullPackageName(String packageName, String fileName) {
-        return packageName.replaceFirst("classes.", "") + fileName.substring(0, fileName.length() - 6);
+        return packageName
+                .replaceFirst(INTELLIJ_OUTPUT_FOLDER, "")
+                .replaceFirst(GRADLE_OUTPUT_FOLDER, "")
+                + fileName.replaceFirst(CLASS_SUFFIX, "");
     }
 }
