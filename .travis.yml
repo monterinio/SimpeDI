@@ -9,6 +9,8 @@ notifications:
 addons:
   sonarcloud:
     organization: "monterinio"
+  token:
+    secure: "*********"
 
 script:
   - ./gradlew clean build sonarqube
