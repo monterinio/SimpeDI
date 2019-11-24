@@ -58,8 +58,9 @@ class Service {
         }
     }
 
+    @SuppressWarnings("unused")
     private void aVoid() {
-        return;
+        // fallback method
     }
 
     public Constructor getValidConstructor() {
@@ -73,7 +74,7 @@ class Service {
                 .filter(constr -> constr.getAnnotation(Inject.class) != null)
                 .collect(collectingAndThen(
                         toList(),
-                        list -> this.validateResult(list))
+                        this::validateResult)
                 );
     }
 

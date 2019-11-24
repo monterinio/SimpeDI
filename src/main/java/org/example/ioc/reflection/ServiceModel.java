@@ -63,7 +63,7 @@ class ServiceModel<T> implements Comparable<ServiceModel<?>> {
         public Method[] beans;
 
         public ServiceModel<T> create() {
-            return new ServiceModel<T>(ownType, annotation, constructor, postConstruct, preDestroy);
+            return new ServiceModel<>(ownType, annotation, constructor, postConstruct, preDestroy);
         }
     }
 }

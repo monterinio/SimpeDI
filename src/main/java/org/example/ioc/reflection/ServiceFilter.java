@@ -9,7 +9,7 @@ import static java.util.function.Predicate.not;
 
 public class ServiceFilter {
 
-    public Set<ServiceModel<?>> findServices(Set<Class<?>> locatedClasses) {
+    public Set<ServiceModel> findServices(Set<Class<?>> locatedClasses) {
         locatedClasses.stream()
                 .filter(not(Class::isAnnotation))
                 .filter(not(Class::isInterface))
