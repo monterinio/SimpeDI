@@ -11,20 +11,22 @@ import java.util.Objects;
 class ServiceModel<T> implements Comparable<ServiceModel<?>> {
 
     private final List<ServiceModel<?>> dependants = new ArrayList<>();
-    private Class<T> ownType;
-    private Annotation annotation;
-    private Constructor<T> constructor;
-    private T instance;
-    private Method postConstruct;
-    private Method preDestroy;
-    private Method[] beans;
+    public final Class<T> ownType;
+    public final Annotation annotation;
+    public final Constructor<T> constructor;
+//    public final T instance;
+    public final Method postConstruct;
+    public final Method preDestroy;
+    public final Method[] beans;
 
-    private ServiceModel(Class<T> ownType, Annotation annotation, Constructor<T> constructor, Method postConstruct, Method preDestroy) {
+    private ServiceModel(Class<T> ownType, Annotation annotation, Constructor<T> constructor, Method postConstruct,
+                         Method preDestroy, Method[] beans) {
         this.ownType = ownType;
         this.annotation = annotation;
         this.constructor = constructor;
         this.postConstruct = postConstruct;
         this.preDestroy = preDestroy;
+        this.beans = beans;
     }
 
     @Override
@@ -40,7 +42,7 @@ class ServiceModel<T> implements Comparable<ServiceModel<?>> {
         return ownType.equals(that.ownType) &&
                 annotation.equals(that.annotation) &&
                 constructor.equals(that.constructor) &&
-                instance.equals(that.instance) &&
+//                instance.equals(that.instance) &&
                 Objects.equals(postConstruct, that.postConstruct) &&
                 Objects.equals(preDestroy, that.preDestroy) &&
                 Arrays.equals(beans, that.beans) &&
@@ -49,7 +51,9 @@ class ServiceModel<T> implements Comparable<ServiceModel<?>> {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(ownType, annotation, constructor, instance, postConstruct, preDestroy, dependants);
+        int result = Objects.hash(ownType, annotation, constructor,
+//                instance,
+                postConstruct, preDestroy, dependants);
         result = 31 * result + Arrays.hashCode(beans);
         return result;
     }
@@ -63,7 +67,7 @@ class ServiceModel<T> implements Comparable<ServiceModel<?>> {
         public Method[] beans;
 
         public ServiceModel<T> create() {
-            return new ServiceModel<>(ownType, annotation, constructor, postConstruct, preDestroy);
+            return new ServiceModel<>(ownType, annotation, constructor, postConstruct, preDestroy, beans);
         }
     }
 }

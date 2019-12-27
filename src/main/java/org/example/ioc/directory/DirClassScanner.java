@@ -10,6 +10,7 @@ class DirClassScanner implements ClassScanner {
     private static final String CLASS_SUFFIX = ".class";
     private static final String INTELLIJ_OUTPUT_FOLDER = "classes.";
     private static final String GRADLE_OUTPUT_FOLDER = "main.";
+
     @Override
     public Set<Class<?>> locate(String dir) {
         var file = new File(dir);

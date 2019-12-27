@@ -15,14 +15,14 @@ import static java.util.stream.Collectors.toList;
 class Service {
 
     public static final String MISSING_FALLBACK_METHOD_EXCEPTION_MSG = "Unable to identify default method: aVoid in Service.class";
-    private static final String NO_CONSTRUCTOR_ANNOTATION_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple constructors were found. " +
+    static final String NO_CONSTRUCTOR_ANNOTATION_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple constructors were found. " +
             "Please mark explicitly, f.e. with @Inject, which constructor should be used for construction.";
-    private static final String MULTIPLE_CONSTRUCTOR_ANNOTATIONS_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple constructors were marked" +
+    static final String MULTIPLE_CONSTRUCTOR_ANNOTATIONS_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple constructors were marked" +
             " with construction annotation (which is @Inject by default). Please remove ambiguity.";
-    private static final String MULTIPLE_HOOK_ANNOTATIONS_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple methods were marked" +
+    static final String MULTIPLE_HOOK_ANNOTATIONS_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple methods were marked" +
             " with the same hook annotation %s (which is @PostConstruct/@PreDestroy by default). Please remove ambiguity.";
-    private static final String WRONG_HOOK_RETURN_TYPE_EXCEPTION_MSG = "Invalid return type for method annotated with %s withing class %s. Expected void or Void, got %s";
-    private Class<?> clazz;
+    static final String WRONG_HOOK_RETURN_TYPE_EXCEPTION_MSG = "Invalid return type for method annotated with %s withing class %s. Expected void or Void, got %s";
+    public final Class<?> clazz;
 
     public Service(Class<?> clazz) {
         this.clazz = clazz;

@@ -1,8 +1,13 @@
 package org.example.ioc.directory;
 
 import org.example.ioc.config.Configuration;
+import org.example.ioc.reflection.ServiceFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         run(Main.class);
@@ -16,6 +21,9 @@ public class Main {
         var dir = new DirectoryResolver()
                         .resolve(entry);
         ClassScanner classScanner = ClassScannerFactory.getClassScanner(dir.getDirType());
-        System.out.println(classScanner.locate(dir.getDir()));
+        logger.info("{}", classScanner.locate(dir.getDir()));
+
+        logger.info("{}", (ServiceFilter.findServices(classScanner.locate(dir.getDir()))));
+
     }
 }

@@ -22,7 +22,7 @@ class ServiceTest extends Specification {
 
     def "should get self generated no-arg constructor"() {
         given:
-        Class<SelfGeneratedNoArgConstructorTest> inputClass = SelfGeneratedNoArgConstructorTest.class
+        Class<ExplicitlyGeneratedNoArgConstructorTest> inputClass = ExplicitlyGeneratedNoArgConstructorTest.class
         Service cut = new Service(inputClass)
 
         when:
@@ -30,7 +30,7 @@ class ServiceTest extends Specification {
 
         then:
         constructor != null
-        constructor.name == "org.example.ioc.reflection.SelfGeneratedNoArgConstructorTest"
+        constructor.name == "org.example.ioc.reflection.ExplicitlyGeneratedNoArgConstructorTest"
         constructor.parameterCount == 1
     }
 
