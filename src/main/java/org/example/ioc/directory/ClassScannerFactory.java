@@ -14,6 +14,6 @@ class ClassScannerFactory {
             return new JarClassScanner();
         }
 
-        throw new IllegalStateException("Unable to construct ClassScanner instance for directoryTYpe: " + directoryType);
+        throw new IllegalStateException("Unable to construct ClassScanner instance for directoryType: " + directoryType);
     }
 }
