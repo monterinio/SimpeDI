@@ -1,4 +1,4 @@
-package org.example.ioc.reflection;
+package org.example.ioc.filter;
 
 import org.example.ioc.annotation.Inject;
 
@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.collectingAndThen;
@@ -14,7 +15,6 @@ import static java.util.stream.Collectors.toList;
 
 class Service {
 
-    public static final String MISSING_FALLBACK_METHOD_EXCEPTION_MSG = "Unable to identify default method: aVoid in Service.class";
     static final String NO_CONSTRUCTOR_ANNOTATION_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple constructors were found. " +
             "Please mark explicitly, f.e. with @Inject, which constructor should be used for construction.";
     static final String MULTIPLE_CONSTRUCTOR_ANNOTATIONS_EXCEPTION_MSG = "Unable to instantiate class %s. Multiple constructors were marked" +
@@ -28,39 +28,13 @@ class Service {
         this.clazz = clazz;
     }
 
-    public Method getMethod(Class<? extends Annotation> annotation) {
+    public Optional<Method> getMethod(Class<? extends Annotation> annotation) {
         return Arrays.stream(clazz.getDeclaredMethods())
                 .filter(method -> method.getDeclaredAnnotation(annotation) != null)
                 .collect(collectingAndThen(
                         toList(),
                         list -> this.validateResult(list, annotation)
                 ));
-    }
-
-    private Method validateResult(List<Method> methods, Class<? extends Annotation> annotation) {
-        if (methods.isEmpty()) {
-            try {
-                return Service.class.getDeclaredMethod("aVoid");
-            } catch (NoSuchMethodException e) {
-                throw new IllegalStateException(MISSING_FALLBACK_METHOD_EXCEPTION_MSG, e);
-            }
-        }
-
-        if (methods.size() > 1) {
-            throw new IllegalStateException(format(MULTIPLE_HOOK_ANNOTATIONS_EXCEPTION_MSG, clazz, annotation));
-        }
-
-        var method = methods.get(0);
-        if (method.getReturnType() == void.class) {
-            return method;
-        } else {
-            throw new IllegalStateException(format(WRONG_HOOK_RETURN_TYPE_EXCEPTION_MSG, annotation, clazz, method.getReturnType()));
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private void aVoid() {
-        // fallback method
     }
 
     public Constructor getValidConstructor() {
@@ -76,6 +50,23 @@ class Service {
                         toList(),
                         this::validateResult)
                 );
+    }
+
+    private Optional<Method> validateResult(List<Method> methods, Class<? extends Annotation> annotation) {
+        if (methods.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (methods.size() > 1) {
+            throw new IllegalStateException(format(MULTIPLE_HOOK_ANNOTATIONS_EXCEPTION_MSG, clazz, annotation));
+        }
+
+        var method = methods.get(0);
+        if (method.getReturnType() == void.class) {
+            return Optional.of(method);
+        } else {
+            throw new IllegalStateException(format(WRONG_HOOK_RETURN_TYPE_EXCEPTION_MSG, annotation, clazz, method.getReturnType()));
+        }
     }
 
     private Constructor<?> validateResult(List<Constructor<?>> constructors) {

@@ -1,7 +1,9 @@
 package org.example.ioc.scanner;
 
 import org.example.ioc.config.Configuration;
-import org.example.ioc.reflection.ServiceFilter;
+import org.example.ioc.instantiation.ServiceInstantiator;
+import org.example.ioc.filter.ServiceFilter;
+import org.example.ioc.filter.ServiceModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

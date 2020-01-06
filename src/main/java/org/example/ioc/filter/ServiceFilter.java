@@ -1,9 +1,9 @@
-package org.example.ioc.reflection;
+package org.example.ioc.filter;
 
 import org.example.ioc.annotation.Component;
 import org.example.ioc.annotation.PostConstruct;
 import org.example.ioc.annotation.PreDestroy;
-import org.example.ioc.reflection.ServiceModel.ServiceBuilder;
+import org.example.ioc.filter.ServiceModel.ServiceBuilder;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
