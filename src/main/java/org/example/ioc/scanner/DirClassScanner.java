@@ -1,4 +1,4 @@
-package org.example.ioc.directory;
+package org.example.ioc.scanner;
 
 import java.io.File;
 import java.util.HashSet;

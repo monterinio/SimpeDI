@@ -1,4 +1,4 @@
-package org.example.ioc.directory;
+package org.example.ioc.scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.example.ioc.directory.DirectoryType.*;
+import static org.example.ioc.scanner.DirectoryType.*;
 
 class DirectoryResolver {
 

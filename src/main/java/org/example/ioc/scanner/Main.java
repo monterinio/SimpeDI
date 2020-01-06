@@ -1,4 +1,4 @@
-package org.example.ioc.directory;
+package org.example.ioc.scanner;
 
 import org.example.ioc.config.Configuration;
 import org.example.ioc.reflection.ServiceFilter;
