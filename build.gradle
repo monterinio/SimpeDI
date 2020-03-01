@@ -15,6 +15,7 @@ repositories {
 }
 
 dependencies {
+    // todo-major: remove slf4j
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.29'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.9'
@@ -66,6 +67,8 @@ clean {
         delete 'out'
         delete 'src/test/resources/test.jar'
     }
+
+    finalizedBy(jar)
 }
 
 build {

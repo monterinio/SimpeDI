@@ -7,6 +7,9 @@ import org.example.ioc.filter.ServiceModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Set;
+
 public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -23,9 +26,9 @@ public class Main {
         var dir = new DirectoryResolver()
                         .resolve(entry);
         ClassScanner classScanner = ClassScannerFactory.getClassScanner(dir.getDirType());
-        logger.info("{}", classScanner.locate(dir.getDir()));
+        final Set<ServiceModel> services = ServiceFilter.findServices(classScanner.locate(dir.getDir()));
 
-        logger.info("{}", (ServiceFilter.findServices(classScanner.locate(dir.getDir()))));
-
+        ServiceInstantiator serviceInstantiator = new ServiceInstantiator();
+        final List<ServiceModel> instantiate = serviceInstantiator.instantiate(services);
     }
 }

@@ -31,8 +31,14 @@ class ServiceFilterTest extends Specification {
         verifyAll {
             result.size() == 1
             result[0].ownType == TestOne.class
-            result[0].postConstruct.toString() == "public void org.example.ioc.reflection.TestOne.test()"
-            result[0].constructor.toString() == "org.example.ioc.reflection.TestOne(org.example.ioc.reflection.TestTwo)"
+
+            def postConstruct = result[0].postConstruct
+            postConstruct != null
+            result[0].postConstruct.isPresent()
+
+            def postConstructUnboxed = result[0].postConstruct.get()
+            postConstructUnboxed.toString() == "public void org.example.ioc.filter.TestOne.test()"
+            result[0].constructor.toString() == "org.example.ioc.filter.TestOne(org.example.ioc.filter.TestTwo)"
         }
     }
 
